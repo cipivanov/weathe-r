@@ -1,0 +1,6 @@
+# Java & Gradle
+
+bin/
+build/
+.gradle/
+.classpath
