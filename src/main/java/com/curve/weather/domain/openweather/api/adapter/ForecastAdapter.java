@@ -1,6 +1,5 @@
 package com.curve.weather.domain.openweather.api.adapter;
 
-import java.util.Comparator;
 import java.util.List;
 
 import com.curve.weather.core.Config.OpenWeatherMap;
@@ -19,21 +18,16 @@ public class ForecastAdapter extends ApiAdapter {
         return this;
     }
 
+    public ForecastAdapter forCity(String name) {
+        addParameter("q", name);
+
+        return this;
+    }
+
     public List<Forecast> get() {
-        addParameter("appid", OpenWeatherMap.getApiKey()); // TODO: review the approach of adding the key right before making the call
+        addParameter("appid", OpenWeatherMap.getApiKey());
         addParameter("units", OpenWeatherMap.getUnitFormat());
 
         return rs.get().jsonPath().getList("list", Forecast.class);
-    }
-
-    // TODO: consider scenarios where multiple days have qualify for hottest and
-    // coldest days
-
-    public Forecast getHottestDay() {
-        return get().stream().max(Comparator.comparing(Forecast::getTemperature)).orElse(Forecast.empty());
-    }
-
-    public Forecast getColdestDay() {
-        return get().stream().min(Comparator.comparing(Forecast::getTemperature)).orElse(Forecast.empty());
     }
 }

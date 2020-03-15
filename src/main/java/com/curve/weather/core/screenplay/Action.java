@@ -6,26 +6,34 @@ import java.util.Set;
 public abstract class Action implements Performable {
 
     private String name;
-    private Set<Question> questions;
+
+    @SuppressWarnings("rawtypes")
+    private Set<Check> checks;
+    private Boolean status;
 
     public Action(String name) {
         this.name = name;
+        this.checks = new LinkedHashSet<>();
     }
 
-    public Action(String name, Set<Question> checks) {
+    @SuppressWarnings("rawtypes")
+    public Action(String name, Set<Check> checks) {
         this.name = name;
-        this.questions = new LinkedHashSet<>();
+        this.checks = checks;
     }
 
+    @Override
     public void checkAs(Actor actor) {
-        questions.stream().forEach(question -> question.checkAs(actor));
+        status = checks.stream().allMatch(check -> check.checkAs(actor).equals(true));
     }
 
+    @Override
 	public String getName() {
 		return name;
     }
 
-	public Set<Question> getQuestions() {
-		return questions;
-	}
+    @Override
+    public Boolean getStatus() {
+        return status;
+    }
 }

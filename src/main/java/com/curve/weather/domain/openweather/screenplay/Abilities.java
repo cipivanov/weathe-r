@@ -3,7 +3,10 @@ package com.curve.weather.domain.openweather.screenplay;
 import com.curve.weather.core.screenplay.Ability;
 import com.curve.weather.domain.openweather.api.adapter.ForecastAdapter;
 
-public class Abilities {
+public final class Abilities {
+
+    private Abilities() {
+    }
 
     private static class GetForecast extends Ability<ForecastAdapter> {
         private GetForecast() {

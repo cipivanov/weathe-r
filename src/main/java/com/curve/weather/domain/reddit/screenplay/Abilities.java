@@ -4,7 +4,10 @@ import com.curve.weather.core.screenplay.Ability;
 import com.curve.weather.domain.reddit.api.adapter.ComposeAdapter;
 import com.curve.weather.domain.reddit.api.adapter.SubmitAdapter;
 
-public class Abilities {
+public final class Abilities {
+
+    private Abilities() {
+    }
 
     private static class Submit extends Ability<SubmitAdapter> {
         private Submit() {

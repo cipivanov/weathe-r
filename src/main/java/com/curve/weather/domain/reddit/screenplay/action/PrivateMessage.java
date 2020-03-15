@@ -6,7 +6,7 @@ import java.util.function.Consumer;
 import com.curve.weather.core.Config.Reddit;
 import com.curve.weather.core.screenplay.Action;
 import com.curve.weather.core.screenplay.Actor;
-import com.curve.weather.core.screenplay.Question;
+import com.curve.weather.core.screenplay.Check;
 import com.curve.weather.domain.reddit.api.adapter.ComposeAdapter;
 
 public class PrivateMessage extends Action {
@@ -20,7 +20,8 @@ public class PrivateMessage extends Action {
         this.consumer = consumer;
     }
 
-    public PrivateMessage(String name, Set<Question> checks, Consumer<Actor> consumer) {
+    @SuppressWarnings("rawtypes")
+    public PrivateMessage(String name, Set<Check> checks, Consumer<Actor> consumer) {
         super(name, checks);
         this.consumer = consumer;
     }
@@ -29,6 +30,8 @@ public class PrivateMessage extends Action {
     public void performAs(Actor actor) {
         consumer.accept(actor);
     }
+
+    // TODO: should not be static all, should allow chaining
 
 	public static PrivateMessage toUser(String user) {
         return new PrivateMessage(
@@ -75,7 +78,7 @@ public class PrivateMessage extends Action {
 	public static PrivateMessage send() {
         return new PrivateMessage(
             "Send Message", 
-            (actor) -> actor.ability(ComposeAdapter.class).enabler().send()
+            (actor) -> actor.memorizes("pm", actor.ability(ComposeAdapter.class).enabler().send())
         );
     }
 

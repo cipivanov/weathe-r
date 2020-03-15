@@ -17,6 +17,6 @@ public class AuthorizeAdapter extends ApiAdapter {
 
         addBasicAuthorization(Reddit.getClientId(), Reddit.getClientSecret());
 
-        return rs.log().all().post().jsonPath().getString("access_token");
+        return rs.post().jsonPath().getString("access_token");
     }
 }
