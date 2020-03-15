@@ -32,7 +32,7 @@ public class WeatherFlowsTest {
     }
 
     @Test
-    public void shouldGetMinimumAndMaximumScenarionInLosAngeles() {
+    public void shouldGetMinimumAndMaximumScenarioInLosAngeles() {
         Actor keanu = Actor.named("Keanu");
 
         keanu.can(
