@@ -8,14 +8,14 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 @JsonDeserialize(using = ForecastDeserializer.class)
 public class Forecast {
 
-    private LocalDateTime date;
+    private LocalDateTime dateTime;
     private Double temperature;
 
     public Forecast() {
     }
 
     public Forecast(LocalDateTime date, Double temperature) {
-        this.date = date;
+        this.dateTime = date;
         this.temperature = temperature;
     }
 
@@ -23,12 +23,12 @@ public class Forecast {
         return new EmptyForecast();
     }
 
-    public LocalDateTime getDate() {
-        return date;
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
     public void setDate(LocalDateTime date) {
-        this.date = date;
+        this.dateTime = date;
     }
 
     public Double getTemperature() {

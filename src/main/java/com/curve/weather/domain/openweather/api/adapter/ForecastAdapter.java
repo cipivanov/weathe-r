@@ -20,8 +20,8 @@ public class ForecastAdapter extends ApiAdapter {
     }
 
     public List<Forecast> get() {
-        addParameter("appid", OpenWeatherMap.getApiKey()); // TODO: review the approach of adding the key right before
-                                                           // making the call
+        addParameter("appid", OpenWeatherMap.getApiKey()); // TODO: review the approach of adding the key right before making the call
+        addParameter("units", OpenWeatherMap.getUnitFormat());
 
         return rs.get().jsonPath().getList("list", Forecast.class);
     }

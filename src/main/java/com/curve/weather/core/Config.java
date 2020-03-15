@@ -35,9 +35,14 @@ public final class Config {
             return instance.get("OWM_BASE_URI");
         }
 
-        public static List<Integer> getCovetedCityIds() {
+        public static List<Integer> getCoveredCityIds() {
             return Arrays.stream(instance.get("OWM_COVERED_CITY_IDS").split(",")).map(Integer::parseInt)
                     .collect(Collectors.toList());
+        }
+
+        // TODO: requires some rethinking, I feel there is more flowy approach to loading city id and names from .env
+        public static String getCityName(Integer cityId) {
+            return instance.get(String.valueOf(cityId));
         }
     }
 
@@ -81,6 +86,10 @@ public final class Config {
 
         public static String getPassword() {
             return instance.get("REDDIT_PASSWORD");
+        }
+
+        public static String getTestSubredditName() {
+            return instance.get("REDDIT_TEST_SUBREDDIT_NAME");
         }
 
         public static String getCurveRecipientUsername() {

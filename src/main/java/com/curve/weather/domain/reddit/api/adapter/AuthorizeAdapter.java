@@ -1,11 +1,11 @@
-package com.curve.weather.domain.reddit.adapter;
+package com.curve.weather.domain.reddit.api.adapter;
 
 import com.curve.weather.core.Config.Reddit;
 import com.curve.weather.core.api.ApiAdapter;
 
-public class AuthorizationAdapter extends ApiAdapter {
+public class AuthorizeAdapter extends ApiAdapter {
 
-    public AuthorizationAdapter() {
+    public AuthorizeAdapter() {
         super(Reddit.getBaseUri(), Reddit.getAuthorizationBasePath());
     }
 
@@ -17,6 +17,6 @@ public class AuthorizationAdapter extends ApiAdapter {
 
         addBasicAuthorization(Reddit.getClientId(), Reddit.getClientSecret());
 
-        return rs.post().jsonPath().getString("access_token");
+        return rs.log().all().post().jsonPath().getString("access_token");
     }
 }

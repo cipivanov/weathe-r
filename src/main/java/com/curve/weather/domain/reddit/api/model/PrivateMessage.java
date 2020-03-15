@@ -1,4 +1,4 @@
-package com.curve.weather.domain.reddit.model;
+package com.curve.weather.domain.reddit.api.model;
 
 import java.util.List;
 
