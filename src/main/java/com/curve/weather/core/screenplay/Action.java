@@ -6,19 +6,18 @@ import java.util.Set;
 public abstract class Action implements Performable {
 
     private String name;
-
-    @SuppressWarnings("rawtypes")
-    private Set<Check> checks;
     private Boolean status;
+    private Set<Check> checks;
 
     public Action(String name) {
         this.name = name;
+        this.status = true; //TODO: revisit this, default is true if checks have not been performed
         this.checks = new LinkedHashSet<>();
     }
 
-    @SuppressWarnings("rawtypes")
     public Action(String name, Set<Check> checks) {
         this.name = name;
+        this.status = true;
         this.checks = checks;
     }
 
@@ -28,8 +27,8 @@ public abstract class Action implements Performable {
     }
 
     @Override
-	public String getName() {
-		return name;
+    public String getName() {
+        return name;
     }
 
     @Override

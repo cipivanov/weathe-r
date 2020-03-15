@@ -3,16 +3,16 @@ plugins {
 }
 
 sourceSets {
-	main {
-		java {
-			srcDirs = ['src/main/java']
-		}
-	}
-	test {
-		java {
-			srcDirs = ['src/test/java']
-		}
-	}
+    main {
+        java {
+            srcDirs = ['src/main/java']
+        }
+    }
+    test {
+        java {
+            srcDirs = ['src/test/java']
+        }
+    }
 }
 
 repositories {
@@ -20,17 +20,19 @@ repositories {
 }
 
 dependencies {
-	implementation 'io.rest-assured:rest-assured:4.2.0'
-	implementation 'io.github.cdimascio:java-dotenv:5.1.3'
-	implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.3'
-	
-	testImplementation 'org.junit.jupiter:junit-jupiter:5.6.0'
+    implementation 'io.rest-assured:rest-assured:4.2.0'
+    implementation 'io.github.cdimascio:java-dotenv:5.1.3'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.3'
+    implementation 'ch.qos.logback:logback-classic:1.2.3'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.6.0'
 }
 
 test {
-	useJUnitPlatform()
-	testLogging {
-		events 'passed', 'skipped', 'failed'
-	}
-	jvmArgs '--illegal-access=deny'
+    useJUnitPlatform()
+    testLogging {
+        events 'passed', 'skipped', 'failed'
+    }
+    jvmArgs '--illegal-access=deny'
+    testLogging.showStandardStreams = true
 }

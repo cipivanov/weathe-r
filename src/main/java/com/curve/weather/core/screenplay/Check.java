@@ -18,7 +18,7 @@ public abstract class Check<T> {
         return name;
     }
 
-    public Predicate<T> getResult() {
+    protected Predicate<T> getResult() {
         return result;
     }
 }

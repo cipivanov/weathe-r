@@ -12,13 +12,11 @@
 * *REST-assured:* REST services testing framework
 * *jackson-databind:* complementary library for REST-assured to allow JSON messages unmarshalling
 * *dotenv:* simplistic configuration loading library
+* *logback:* logging library
 
 ## Project structure
 
-The ATF core has the following structure:
-src\main\java\com\openplatform\atf
-
-```bash
+```
 src
 └─main
    └─java
@@ -33,17 +31,42 @@ src
                   └─openweather - Open Weather Map specific API adapters and screenplay interactions
 ```
 
-*.circleci/config.yml* - CI configuration-as-code file
-*gradle.build* - handles all the dependencies and information about the build process
-*gradle* - Gradle wrapper folder, allows to run the tests without installing gradle
+**.circleci/config.yml** - CI configuration-as-code file
 
-*src\test\java\com\curve\weather\WeatherFlowsTest.java* - test cases location
+**gradle.build** - handles all the dependencies and information about the build process
+
+**gradle** - Gradle wrapper folder, allows to run the tests without installing gradle
+
+**src\test\java\com\curve\weather\WeatherFlowsTest.java** - test cases location
+
+## Prerequisites
+
+The only requirement is to have Maven and Git installed and configured properly. 
+See: https://maven.apache.org/install.html for Maven and for Git https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
 
 ## Setup
 
-Not much in the way of setting up the project.
+Easy as π. Just clone the repository.
 
-The only requirement is to have Java 11 SDK installed.
+### Running tests
+
+Before running tests check .env file and populate the following key values:
+
+* REDDIT_PASSWORD (Reddit password of the user who has allowed the client app)
+* REDDIT_CLIENT_SECRET (user associated client app secret)
+* REDDIT_CURVE_RECIPIENT_USERNAME (account with this username will receive the PM)
+
+Once those are set make use of the Gradle wrapper and run the **test** task in the root of the project where build.gradle is located:
+
+```
+gradle.bat test - cmd
+./gradlew test  - bash
+```
+
+## Contributing
+
+TBC - Naming conventions for Action/Task/Check
+TBC - Opening PRs (GitFlow)
 
 ## Capabilities
 
@@ -56,16 +79,24 @@ Bare-bones test framework structure created and is includes perform the followin
 
 ## Things That Never May (TODOs/Future Capabilities)
 
-* Custom reporting capabilities
-  * Showcase what is being tested and the value of the tests being run to non-technical people.
-  * Test evidence (more in-depth extensive test run logs) gathering is also being developed
+### High Priority
+
+* Improved logging, which is rather simplistic currently
+* Templating engine to simplify Reddit post body creation
+* Sane approach to context sharing (instead of using memory as context)
+* Refactor of the Adapter layer (currently hides some actions to avoid a complex screenplay layer)
 * Extension and re-factoring of the checks
   * The goal is allow a multitude of validation capabilities coupled with reduction in boilerplate code.
   * eager test failures, i.e. actions failing after first failed check
-* Refactoring of the Adapter layer (currently hides some actions to avoid a complex screenplay layer)
-* Sane approach to context sharing (instead of using memory as context)
-* Improved logging, which is rather simplisting currently
-* Unit tests for core framework functionalities
-* More extensive modeling of responses/requests
-* Parallel execution capabilities
+  * Explicit messages when check fails, currently just pass/fail
+* Custom reporting capabilities
+  * Showcase what is being tested and the value of the tests being run to non-technical people.
+  * Test evidence (more in-depth extensive test run logs) gathering is also being developed
+
+
+### Low Priority
+
 * Code quality metrics
+* Parallel execution capabilities
+* Unit tests for core framework functionality
+* More extensive modeling of responses/requests

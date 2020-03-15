@@ -1,13 +1,17 @@
 package com.curve.weather.core.screenplay;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 public abstract class Task implements Performable {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(Task.class);
+
     private String name;
     private Set<Action> actions;
-    @SuppressWarnings("rawtypes")
     private Set<Check> checks;
     private Boolean status;
 
@@ -17,7 +21,7 @@ public abstract class Task implements Performable {
         this.checks = new LinkedHashSet<>();
     }
 
-    protected Task(final String name, final Set<Action> actions, @SuppressWarnings("rawtypes") Set<Check> checks) {
+    protected Task(final String name, final Set<Action> actions, Set<Check> checks) {
         this.name = name;
         this.actions = actions;
         this.checks = checks;
@@ -29,7 +33,12 @@ public abstract class Task implements Performable {
 
     @Override
     public void performAs(Actor actor) {
-        actions.stream().forEach(action -> action.performAs(actor));
+        actions.forEach(action -> {
+            //TODO: needs to be decorated
+            LOGGER.info(String.format("Actor [%s] Executing Task [%s] Action [%s]", actor.getName(), name, action.getName()));
+            action.performAs(actor);
+            LOGGER.info(String.format("Action <%s>", action.getStatus() ? "Executed Successfully" : "Failed"));
+        });
     }
 
     @Override
@@ -45,10 +54,5 @@ public abstract class Task implements Performable {
     @Override
     public Boolean getStatus() {
         return status;
-    }
-
-    @SuppressWarnings("rawtypes")
-    public Set<Check> getChecks() {
-        return checks;
     }
 }

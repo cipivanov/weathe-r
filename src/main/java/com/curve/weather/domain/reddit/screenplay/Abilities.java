@@ -9,9 +9,17 @@ public final class Abilities {
     private Abilities() {
     }
 
+    public static Submit submitRedditPost() {
+        return new Submit();
+    }
+
+    public static SendPrivateMessage sendRedditPrivateMessage() {
+        return new SendPrivateMessage();
+    }
+
     private static class Submit extends Ability<SubmitAdapter> {
         private Submit() {
-			super("Submit A Reddit Post", new SubmitAdapter());
+            super("Submit A Reddit Post", new SubmitAdapter());
         }
     }
 
@@ -19,13 +27,5 @@ public final class Abilities {
         private SendPrivateMessage() {
             super("Send Reddit Private Message", new ComposeAdapter());
         }
-    }
-
-    public static Submit submitRedditPost() {
-        return new Submit();
-    }
-
-    public static SendPrivateMessage sendRedditPrivateMessage() {
-        return new SendPrivateMessage();
     }
 }

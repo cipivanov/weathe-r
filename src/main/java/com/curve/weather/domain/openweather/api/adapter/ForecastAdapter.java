@@ -1,10 +1,10 @@
 package com.curve.weather.domain.openweather.api.adapter;
 
-import java.util.List;
-
 import com.curve.weather.core.Config.OpenWeatherMap;
 import com.curve.weather.core.api.ApiAdapter;
 import com.curve.weather.domain.openweather.api.model.Forecast;
+
+import java.util.List;
 
 public class ForecastAdapter extends ApiAdapter {
 

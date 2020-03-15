@@ -9,10 +9,6 @@ public class Tasks {
         return CoveredCitiesWeatherForecast.get();
     }
 
-    public static WeatherForecast setForecastFor(String city) {
-        return WeatherForecast.forCity(city);
-    }
-
     public static WeatherForecast getHottestDayFor(String city) {
         return WeatherForecast.getHottestDayFor(city);
     }
@@ -21,7 +17,7 @@ public class Tasks {
         return WeatherForecast.getColdestDayFor(city);
     }
 
-    public static WeatherForecast showsBothForecasts() {
+    public static WeatherForecast showBothForecasts() {
         return WeatherForecast.printsBothForecasts();
     }
 }

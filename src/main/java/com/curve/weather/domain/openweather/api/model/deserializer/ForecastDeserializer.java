@@ -1,18 +1,17 @@
 package com.curve.weather.domain.openweather.api.model.deserializer;
 
-import java.io.IOException;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-
 import com.curve.weather.domain.openweather.api.model.Forecast;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.TreeNode;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.node.IntNode;
 import com.fasterxml.jackson.databind.node.NumericNode;
+
+import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 public class ForecastDeserializer extends StdDeserializer<Forecast> {
 
@@ -28,7 +27,7 @@ public class ForecastDeserializer extends StdDeserializer<Forecast> {
 
     @Override
     public Forecast deserialize(final JsonParser jp, final DeserializationContext ctxt)
-            throws IOException, JsonProcessingException {
+            throws IOException {
         TreeNode node = jp.getCodec().readTree(jp);
 
         // date mapping

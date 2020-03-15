@@ -1,22 +1,24 @@
 package com.curve.weather.domain.openweather.screenplay.action;
 
+import com.curve.weather.core.Config.OpenWeatherMap;
+import com.curve.weather.core.screenplay.Action;
+import com.curve.weather.core.screenplay.Task;
+import com.curve.weather.domain.openweather.screenplay.check.CoveredCitiesForecast;
+
 import java.util.LinkedHashSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.curve.weather.core.Config.OpenWeatherMap;
-import com.curve.weather.core.screenplay.Action;
-import com.curve.weather.core.screenplay.Task;
-
 public class CoveredCitiesWeatherForecast extends Task {
 
-    protected CoveredCitiesWeatherForecast() {
+    private CoveredCitiesWeatherForecast() {
         super(
-            "Get Covered Cities Weather Forecast",
-            OpenWeatherMap.getCoveredCityIds()
-                .stream()
-                .flatMap(city -> fanOut(city))
-                .collect(Collectors.toCollection(LinkedHashSet::new))
+                "Get Covered Cities Weather Forecast",
+                OpenWeatherMap.getCoveredCityIds()
+                        .stream()
+                        .flatMap(CoveredCitiesWeatherForecast::fanOut)
+                        .collect(Collectors.toCollection(LinkedHashSet::new)),
+                Stream.of(CoveredCitiesForecast.isPresent()).collect(Collectors.toSet())
         );
     }
 

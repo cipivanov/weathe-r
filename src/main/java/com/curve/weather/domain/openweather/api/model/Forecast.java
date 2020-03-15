@@ -1,9 +1,9 @@
 package com.curve.weather.domain.openweather.api.model;
 
-import java.time.LocalDateTime;
-
 import com.curve.weather.domain.openweather.api.model.deserializer.ForecastDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+import java.time.LocalDateTime;
 
 @JsonDeserialize(using = ForecastDeserializer.class)
 public class Forecast {

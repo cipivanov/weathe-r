@@ -6,20 +6,20 @@ import com.curve.weather.domain.reddit.api.model.PrivateMessage;
 
 public class PrivateMessageRequest extends Check<PrivateMessage> {
 
-	protected PrivateMessageRequest() {
-		super(
-			"Privete Message Request Successful", 
-			(errors) -> errors.getErrors().isEmpty()
-		);
-	}
+    protected PrivateMessageRequest() {
+        super(
+                "Private Message Request Successful",
+                (errors) -> errors.getErrors().isEmpty()
+        );
+    }
 
-	public static PrivateMessageRequest successful() {
-		return new PrivateMessageRequest();
-	}
+    public static PrivateMessageRequest successful() {
+        return new PrivateMessageRequest();
+    }
 
-	@Override
-	public Boolean checkAs(Actor actor) {
-		return getResult().test(actor.recalls("pm"));
-	}
+    @Override
+    public Boolean checkAs(Actor actor) {
+        return getResult().test(actor.recalls("pm"));
+    }
 
 }

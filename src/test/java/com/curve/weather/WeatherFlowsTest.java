@@ -1,18 +1,14 @@
 package com.curve.weather;
 
+import com.curve.weather.core.screenplay.Actor;
+import org.junit.jupiter.api.Test;
+
 import static com.curve.weather.domain.openweather.screenplay.Abilities.getWeatherForecast;
-import static com.curve.weather.domain.openweather.screenplay.Tasks.getColdestDayFor;
-import static com.curve.weather.domain.openweather.screenplay.Tasks.getCoveredCitiesWeatherForecast;
-import static com.curve.weather.domain.openweather.screenplay.Tasks.getHottestDayFor;
-import static com.curve.weather.domain.openweather.screenplay.Tasks.showsBothForecasts;
+import static com.curve.weather.domain.openweather.screenplay.Tasks.*;
 import static com.curve.weather.domain.reddit.screenplay.Abilities.sendRedditPrivateMessage;
 import static com.curve.weather.domain.reddit.screenplay.Abilities.submitRedditPost;
 import static com.curve.weather.domain.reddit.screenplay.Tasks.sendPrivateMessageToTestAccount;
 import static com.curve.weather.domain.reddit.screenplay.Tasks.submitCoveredCitiesHottestWeatherReport;
-
-import com.curve.weather.core.screenplay.Actor;
-
-import org.junit.jupiter.api.Test;
 
 public class WeatherFlowsTest {
 
@@ -22,16 +18,16 @@ public class WeatherFlowsTest {
 
         // masked setup
         keanu.can(
-            getWeatherForecast(),
-            submitRedditPost(),
-            sendRedditPrivateMessage()
+                getWeatherForecast(),
+                submitRedditPost(),
+                sendRedditPrivateMessage()
         );
 
         // actual testing
         keanu.attemptsTo(
-            getCoveredCitiesWeatherForecast(),
-            submitCoveredCitiesHottestWeatherReport(),
-            sendPrivateMessageToTestAccount()
+                getCoveredCitiesWeatherForecast(),
+                submitCoveredCitiesHottestWeatherReport(),
+                sendPrivateMessageToTestAccount()
         );
     }
 
@@ -40,15 +36,15 @@ public class WeatherFlowsTest {
         Actor keanu = Actor.named("Keanu");
 
         keanu.can(
-            getWeatherForecast()
+                getWeatherForecast()
         );
 
         keanu.attemptsTo(
-            getHottestDayFor("Los Angeles"),
-            getColdestDayFor("Los Angeles"),
-            // for historic data it would have been possible to hardcode the expected values, since they do not change
-            // because we are talking forecasts (future data) there is no simple way to atomically validate it, just print it
-            showsBothForecasts()
+                getHottestDayFor("Los Angeles"),
+                getColdestDayFor("Los Angeles"),
+                // for historic data it would have been possible to hardcode the expected values, since they do not change
+                // because we are talking forecasts (future data) there is no simple way to atomically validate it, just print it
+                showBothForecasts()
         );
     }
 }

@@ -1,34 +1,45 @@
 package com.curve.weather.core.screenplay;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 public class Actor {
 
-    private final static Logger LOGGER = Logger.getLogger(Actor.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(Actor.class);
 
     private final String name;
     private final Map<String, Object> memory;
-    @SuppressWarnings("rawtypes") private final Map<Class, Ability> abilities;
+    private final Map<Class, Ability> abilities;
 
+    private Actor(final String name) {
+        this.name = name;
+        this.memory = new HashMap<>();
+        this.abilities = new HashMap<>();
+    }
 
     public static Actor named(final String name) {
         return new Actor(name);
     }
 
-    private Actor(final String name) {
-        this.name = name;
-        this.abilities = new HashMap<>();
-        this.memory = new HashMap<>();
+    public void can(final Ability... abilities) {
+        Stream.of(abilities).forEach(this::add);
     }
 
-    public void can(@SuppressWarnings("rawtypes") final Ability... abilities) {
-        Stream.of(abilities).forEach(ability -> add(ability));
+    @SuppressWarnings("unchecked")
+    public <T> Ability<T> ability(Class<T> clazz) {
+        if (abilities.containsKey(clazz)) {
+            return (Ability<T>) abilities.get(clazz);
+        }
+
+        throw new RuntimeException("Actor not capable. Provide proper abilities.");
     }
 
-	public void attemptsTo(final Performable... performables) {
+    public void attemptsTo(final Performable... performables) {
+        //TODO: decorate
         for (Performable performable : performables) {
             LOGGER.info(String.format("Actor [%s] Executing Performable [%s]", name, performable.getName()));
 
@@ -43,28 +54,23 @@ public class Actor {
         }
     }
 
+    public void shows(String value) {
+        LOGGER.info(String.format("Actor [%s] shows [%s]", name, value));
+    }
+
     public <T> void memorizes(String withKey, T value) {
         memory.put(withKey, value);
     }
-    
+
     @SuppressWarnings("unchecked")
-	public <T> T recalls(String theKey) {
+    public <T> T recalls(String theKey) {
         return (T) memory.getOrDefault(theKey, null);
     }
 
-    public void shows(String value) {
-        LOGGER.info(value);
+    public String getName() {
+        return name;
     }
 
-    @SuppressWarnings("unchecked")
-	public <T> Ability<T> ability(Class<T> clazz) {
-        if (abilities.containsKey(clazz)) {
-            return (Ability<T>) abilities.get(clazz);
-        }
-
-        throw new RuntimeException("Actor not capable. Provide proper abilities");
-    }
-    
     private void add(@SuppressWarnings("rawtypes") final Ability ability) {
         abilities.put(ability.enabler().getClass(), ability);
     }

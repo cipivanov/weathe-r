@@ -1,13 +1,13 @@
 package com.curve.weather.domain.reddit.screenplay.action;
 
-import java.util.Set;
-import java.util.function.Consumer;
-
 import com.curve.weather.core.Config.Reddit;
 import com.curve.weather.core.screenplay.Action;
 import com.curve.weather.core.screenplay.Actor;
 import com.curve.weather.core.screenplay.Check;
 import com.curve.weather.domain.reddit.api.adapter.ComposeAdapter;
+
+import java.util.Set;
+import java.util.function.Consumer;
 
 public class PrivateMessage extends Action {
 
@@ -26,63 +26,63 @@ public class PrivateMessage extends Action {
         this.consumer = consumer;
     }
 
-    @Override
-    public void performAs(Actor actor) {
-        consumer.accept(actor);
+    public static PrivateMessage toUser(String user) {
+        return new PrivateMessage(
+                String.format("Set User To <%s>", user),
+                (actor) -> actor.ability(ComposeAdapter.class).enabler().addParameter("to", user)
+        );
     }
 
     // TODO: should not be static all, should allow chaining
 
-	public static PrivateMessage toUser(String user) {
+    public static PrivateMessage withSubject(String subject) {
         return new PrivateMessage(
-            "Set User",
-            (actor) -> actor.ability(ComposeAdapter.class).enabler().addParameter("to", user)
+                String.format("Set Subject To <%s>", subject),
+                (actor) -> actor.ability(ComposeAdapter.class).enabler().addParameter("subject", subject)
         );
-	}
+    }
 
-	public static PrivateMessage withSubject(String subject) {
+    public static PrivateMessage withBody(String body) {
         return new PrivateMessage(
-            "Set Subject",
-            (actor) -> actor.ability(ComposeAdapter.class).enabler().addParameter("subject", subject)
-        );
-	}
-
-	public static PrivateMessage withBody(String body) {
-        return new PrivateMessage(
-            "Set Body",
-            (actor) -> actor.ability(ComposeAdapter.class).enabler().addParameter("text", body)
+                String.format("Set Body To <%s>", body),
+                (actor) -> actor.ability(ComposeAdapter.class).enabler().addParameter("text", body)
         );
     }
 
     public static PrivateMessage toTestUser() {
         return new PrivateMessage(
-            "Set User", 
-            (actor) -> actor.ability(ComposeAdapter.class).enabler().addParameter("to", Reddit.getCurveRecipientUsername())
-        );
-	}
-
-	public static PrivateMessage withWeatherReportSubject() {
-        return new PrivateMessage(
-            "Set Subject", 
-            (actor) -> actor.ability(ComposeAdapter.class).enabler().addParameter("subject", "New Weather Report")
-        );
-	}
-
-	public static PrivateMessage withWeatherReportBody() {
-        return new PrivateMessage(
-            "Set Body", 
-            (actor) -> actor.ability(ComposeAdapter.class).enabler().addParameter("text", getWeatherReportBody(actor.recalls("url")))
+                "Set User To Test User",
+                (actor) -> actor.ability(ComposeAdapter.class).enabler().addParameter("to", Reddit.getCurveRecipientUsername())
         );
     }
 
-	public static PrivateMessage send() {
+    public static PrivateMessage withWeatherReportSubject() {
         return new PrivateMessage(
-            "Send Message", 
-            (actor) -> actor.memorizes("pm", actor.ability(ComposeAdapter.class).enabler().send())
+                "Set Subject To Weather Report Subject",
+                (actor) -> actor.ability(ComposeAdapter.class).enabler().addParameter("subject", "New Weather Report")
+        );
+    }
+
+    public static PrivateMessage withWeatherReportBody() {
+        return new PrivateMessage(
+                "Set Body",
+                (actor) -> actor.ability(ComposeAdapter.class).enabler().addParameter("text", getWeatherReportBody(actor.recalls("url")))
+        );
+    }
+
+    public static PrivateMessage send() {
+        return new PrivateMessage(
+                "Send Message",
+                (actor) -> actor.memorizes("pm", actor.ability(ComposeAdapter.class).enabler().send())
         );
     }
 
     private static String getWeatherReportBody(String postLink) {
         return String.format(PM_BODY_TEMPLATE, postLink);
+    }
+
+    @Override
+    public void performAs(Actor actor) {
+        consumer.accept(actor);
     }
 }

@@ -8,13 +8,13 @@ public final class Abilities {
     private Abilities() {
     }
 
-    private static class GetForecast extends Ability<ForecastAdapter> {
-        private GetForecast() {
-			super("Get Weather Forecast From Open Weather Map", new ForecastAdapter());
-        }
-    }
-
     public static GetForecast getWeatherForecast() {
         return new GetForecast();
+    }
+
+    private static class GetForecast extends Ability<ForecastAdapter> {
+        private GetForecast() {
+            super("Get Weather Forecast From Open Weather Map", new ForecastAdapter());
+        }
     }
 }
