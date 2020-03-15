@@ -100,3 +100,9 @@ Bare-bones test framework structure created and is includes perform the followin
 * Parallel execution capabilities
 * Unit tests for core framework functionality
 * More extensive modeling of responses/requests
+
+## Regarding Performance Testing
+
+I would advise against using this piece of code as a performance testing tool. It is better suited as a functional, ideally E2E, testing tool. For non-functional testing purposes I would advise creating a separate framework/module.
+
+[JMeter](https://jmeter.apache.org/), [Gatling](https://artillery.io/) or [Artillery](https://artillery.io/) are all great options. 
